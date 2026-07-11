@@ -4,12 +4,10 @@ server:
 spring:
   application:
     name: orders
-  profiles:
-    active: dev
 
 kafka:
   producer:
-    bootstrap-servers: kafka-1:9090,kafka-2:9090,kafka-3:9090
+    bootstrap-servers: localhost:9092
     acks: all
     delivery-timeout-ms: 120000
     linger-ms: 0
