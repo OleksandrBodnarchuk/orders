@@ -3,7 +3,6 @@ package pl.alex.order.create.adapters.out.persistence;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.alex.order.create.adapters.out.persistence.entity.OrderEntity;
 import pl.alex.order.create.adapters.out.persistence.entity.OutboxEntity;
@@ -15,7 +14,6 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -37,7 +35,5 @@ public class JpaOrderCommandRepositoryAdapter implements OrderRepositoryPort {
         outboxEntity.setStatus(OutboxStatus.NEW);
         outboxEntity.setCreatedAt(LocalDateTime.now());
         outboxRepository.save(outboxEntity);
-
-        log.info("Order Created Successfully: {}", order);
     }
 }
