@@ -4,6 +4,19 @@ server:
 spring:
   application:
     name: orders
+  datasource:
+    url: jdbc:h2:file:/data/sample
+    driverClassName: org.h2.Driver
+    username: test
+    password: test
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
 kafka:
   producer:
@@ -21,6 +34,7 @@ kafka:
       partitions: 3
       replicas: 3
 
-#logging:
-#  level:
+logging:
+  level:
+    pl.alex.order: DEBUG
 #    org.apache.kafka: ERROR

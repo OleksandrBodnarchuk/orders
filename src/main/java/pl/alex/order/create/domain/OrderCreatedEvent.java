@@ -1,7 +1,4 @@
-package pl.alex.order.create.domain.event;
-
-import pl.alex.order.create.domain.Order;
-import pl.alex.order.create.domain.OrderStatus;
+package pl.alex.order.create.domain;
 
 import java.math.BigDecimal;
 

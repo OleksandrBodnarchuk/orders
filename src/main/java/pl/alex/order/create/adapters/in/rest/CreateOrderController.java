@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.alex.order.create.api.CreateOrderRequest;
 import pl.alex.order.create.application.command.CreateOrderCommand;
 import pl.alex.order.create.application.command.CreateOrderCommandHandler;
-import pl.alex.order.create.api.CreateOrderRequest;
 
 @RestController
 @RequestMapping("/v1/orders")

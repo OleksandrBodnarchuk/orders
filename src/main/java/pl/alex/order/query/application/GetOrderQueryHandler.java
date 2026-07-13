@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.alex.order.query.api.OrderResponse;
 import pl.alex.order.query.ports.OrderQueryRepositoryPort;
 
@@ -16,11 +17,13 @@ public class GetOrderQueryHandler {
 
     OrderQueryRepositoryPort orderQueryRepositoryPort;
 
+    @Transactional(readOnly = true)
     public OrderResponse handle(OrderQuery query) {
         return orderQueryRepositoryPort.getOrderById(query.orderId())
                 .orElseThrow(() -> new RuntimeException("Order Not Found"));
     }
 
+    @Transactional(readOnly = true)
     public List<OrderResponse> handle() {
         return orderQueryRepositoryPort.getAllOrders();
     }
