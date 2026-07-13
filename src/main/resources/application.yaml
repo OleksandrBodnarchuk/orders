@@ -1,28 +1,5 @@
-server:
-  port: 0
-
 spring:
   application:
     name: orders
   profiles:
     active: dev
-
-kafka:
-  producer:
-    bootstrap-servers: kafka-1:9090,kafka-2:9090,kafka-3:9090
-    acks: all
-    delivery-timeout-ms: 120000
-    linger-ms: 0
-    request-timeout-ms: 30000
-    ennable-idempotence: true
-    retries: 2
-    maximum-in-flight-requests-per-connection: 5
-  topic:
-    orders:
-      name: order-created-topic
-      partitions: 3
-      replicas: 3
-
-#logging:
-#  level:
-#    org.apache.kafka: ERROR
