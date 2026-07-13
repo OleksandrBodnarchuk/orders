@@ -23,7 +23,9 @@ public class CreateOrderController {
 
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
-        createOrderCommandHandler.handle(CreateOrderCommand.from(createOrderRequest));
+        for (int i = 0; i < 10; i++) {
+            createOrderCommandHandler.handle(CreateOrderCommand.from(createOrderRequest));
+        }
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
