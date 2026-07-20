@@ -5,18 +5,13 @@ spring:
   application:
     name: orders
   datasource:
-    url: jdbc:h2:file:/data/sample
-    driverClassName: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/microservices
+    driverClassName: org.postgresql.Driver
     username: test
     password: test
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+      ddl-auto: create
 
 kafka:
   producer:

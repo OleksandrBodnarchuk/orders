@@ -4,16 +4,14 @@ import pl.alex.order.create.domain.Order;
 import pl.alex.order.create.domain.OrderStatus;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
-public record OrderResponse(UUID orderId,
-                            String name,
+public record OrderResponse(String name,
                             BigDecimal price,
                             Integer quantity,
                             OrderStatus status) {
 
     public static OrderResponse from(Order order) {
-        return new OrderResponse(order.id(),
+        return new OrderResponse(
                 order.name(),
                 order.price(),
                 order.quantity(),
