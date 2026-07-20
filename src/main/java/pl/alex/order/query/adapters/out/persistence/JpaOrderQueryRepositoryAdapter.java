@@ -1,6 +1,8 @@
 package pl.alex.order.query.adapters.out.persistence;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import pl.alex.order.create.adapters.out.persistence.OrderRepository;
 import pl.alex.order.query.api.OrderResponse;
@@ -12,6 +14,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class JpaOrderQueryRepositoryAdapter implements OrderQueryRepositoryPort {
 
     OrderRepository orderRepository;

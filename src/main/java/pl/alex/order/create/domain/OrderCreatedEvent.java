@@ -2,15 +2,13 @@ package pl.alex.order.create.domain;
 
 import java.math.BigDecimal;
 
-public record OrderCreatedEvent(String id,
-                                String name,
+public record OrderCreatedEvent(String name,
                                 BigDecimal price,
                                 Integer quantity,
                                 OrderStatus status) {
 
     public static OrderCreatedEvent from(Order order) {
         return new OrderCreatedEvent(
-                order.id().toString(),
                 order.name(),
                 order.price(),
                 order.quantity(),

@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,7 @@ import pl.alex.order.create.domain.OrderCreatedEvent;
 import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -38,12 +41,13 @@ public class KafkaOrderOutboxPublisher {
 
         for (OutboxEntity event : events) {
             try {
-                kafkaTemplate.send(
+                val producerRecord = new ProducerRecord<String, Object>(
                         String.format("%s-topic", event.getAggregateName()),
                         event.getAggregateId().toString(),
                         objectMapper.readValue(event.getPayload(), OrderCreatedEvent.class)
-                ).get();
-
+                );
+                producerRecord.headers().add("messageId", UUID.randomUUID().toString().getBytes());
+                kafkaTemplate.send(producerRecord).get();
                 updateOutboxStatus(event, OutboxStatus.SENT);
             } catch (Exception e) {
                 log.error("Failed to publish event {}", event.getId(), e);
@@ -55,12 +59,10 @@ public class KafkaOrderOutboxPublisher {
     }
 
     private void updateOutboxStatus(OutboxEntity event, OutboxStatus failed) {
-        transactionTemplate.executeWithoutResult(status -> {
-            outboxRepository.findById(event.getId())
-                    .ifPresent(entity -> {
-                        entity.setStatus(failed);
-                        outboxRepository.save(entity);
-                    });
-        });
+        transactionTemplate.executeWithoutResult(status -> outboxRepository.findById(event.getId())
+                .ifPresent(entity -> {
+                    entity.setStatus(failed);
+                    outboxRepository.save(entity);
+                }));
     }
 }
